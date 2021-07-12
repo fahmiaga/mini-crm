@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CompanyExport;
+use App\Imports\CompanyImport;
+use App\Jobs\NewCompanyJob;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyController extends Controller
 {
@@ -61,13 +65,14 @@ class CompanyController extends Controller
             'website' => $request->website,
         ]);
 
-        Mail::send(
-            'email.companyAdded',
-            $data->toArray(),
-            function ($message) {
-                $message->to('fahmi.aga@gmail.com', 'Code Online')->subject('New Company Added');
-            }
-        );
+        // Mail::send(
+        //     'email.companyAdded',
+        //     $data->toArray(),
+        //     function ($message) {
+        //         $message->to('fahmi.aga@gmail.com', 'Code Online')->subject('New Company Added');
+        //     }
+        // );
+        dispatch(new NewCompanyJob());
 
         return redirect('companies')->with('message', 'Company Successfully Added');
     }
@@ -147,5 +152,19 @@ class CompanyController extends Controller
         unlink('logo/' . $id_img->logo);
         Company::destroy($id);
         return redirect('companies')->with('message', 'Company Successfully Deleted');
+    }
+
+    public function importCompany(Request $request)
+    {
+        $fileImport = $request->file('file');
+        if ($fileImport == null) {
+            return back()->with('message', 'File not imported');
+        }
+        Excel::import(new CompanyImport, $fileImport->store('temp'));
+        return back()->with('message', 'File successfully imported');
+    }
+    public function exportCompany()
+    {
+        return Excel::download(new CompanyExport, 'company-list.xlsx');
     }
 }

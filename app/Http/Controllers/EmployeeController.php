@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployeeExport;
+use App\Imports\EmployeeImport;
 use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -136,5 +139,18 @@ class EmployeeController extends Controller
     {
         Employee::destroy($id);
         return redirect('employees')->with('message', 'Employee Successfully Deleted');
+    }
+    public function importEmployee(Request $request)
+    {
+        $fileImport = $request->file('file');
+        if ($fileImport == null) {
+            return back()->with('message', 'File not imported');
+        }
+        Excel::import(new EmployeeImport, $fileImport->store('temp'));
+        return back()->with('message', 'File successfully imported');
+    }
+    public function exportEmployee()
+    {
+        return Excel::download(new EmployeeExport, 'employee-list.xlsx');
     }
 }

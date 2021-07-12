@@ -23,7 +23,24 @@
             </div>
             <div class="box-body">
               
-              <a href="{{url('employees/create')}}" class="btn btn-primary mb-2" style="margin-bottom: 10px">{{__('add employee')}}</a>
+              <form action="{{ route('import-employee')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row" style="margin-bottom:5px ">
+                  <div class="col-md-2">
+                    <a href="{{url('employees/create')}}" class="btn btn-primary mb-2" style="margin-bottom: 10px">{{__('add employee')}}</a>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
+                      <div class="custom-file text-left">
+                          <input type="file" name="file" class="custom-file-input" id="customFile">
+                          <label class="custom-file-label" for="customFile">Choose file</label>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary">Import data</button>
+                    <a href="{{route('export-employee')}}" class="btn btn-success">Export Data</a>
+                  </div>
+                </div>
+              </form>
 
               @if (session('message'))
               <div class="alert alert-success alert-dismissible mt-1">

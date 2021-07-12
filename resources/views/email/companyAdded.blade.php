@@ -1,6 +1,6 @@
 <h1>Hello new Company was added</h1>
 
-<table border="1px">
+{{-- <table border="1px">
     <thead>
         <tr>
           <th scope="col">Name</th>
@@ -13,5 +13,5 @@
           <td>{{$email}}</td>
           <td>{{$website}}</td>
       </tbody>
-  </table>
+  </table> --}}
 
