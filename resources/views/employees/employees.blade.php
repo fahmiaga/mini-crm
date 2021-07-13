@@ -39,6 +39,27 @@
                     <button class="btn btn-primary">Import data</button>
                     <a href="{{route('export-employee')}}" class="btn btn-success">Export Data</a>
                   </div>
+                  <div class="col-md-8">
+                    <p>
+                      <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Filter Data
+                      </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                        <div class="form-group">
+                          <input type="text" id="filter-name" name="first_name" placeholder="First Name...">
+                          <input type="text" id="filter-last" name="last_name" placeholder="Last Name...">
+                         <select name="company" id="filter-company">
+                            <option value=""> Choose Company </option>
+                            @foreach ($companies as $data)
+                            <option value="{{$data->name}}"> {{$data->name}} </option>
+                            @endforeach
+                         </select>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </form>
 
@@ -135,14 +156,17 @@
 
     <script>
         $(document).ready(function(){
-          data1()
-        });
-        function data1(){
-          $('#tabel1').DataTable({
+          // data1()
+        // });
+        // function data1(){
+            var table =  $('#tabel1').DataTable({
             serverside : true,
             responsive : true,
             ajax:{
               url:"{{route('employees.index')}}"
+              // data : function (d){
+              //   d.first_name = $('#filter-name').val();
+              // }
             },
             columns:[
               {
@@ -158,9 +182,36 @@
                 {data: 'phone', name:'phone'},
                 {data: 'action', name:'action',orderable: false},
             ],
-              order:[[0,'asc']]  
+              order:[[0,'asc']],
+              iDisplayLength :10,
+              aLengthMenu : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+              
           })
-        }
+
+            // filter First Name
+            $('#filter-name').keyup(function (){
+              var keyword = $('#filter-name').val();
+              table.columns(1)
+              .search(keyword)
+              .draw();
+            });
+            // filter Last Name
+            $('#filter-last').keyup(function (){
+              var keyword = $('#filter-last').val();
+              console.log(keyword)
+              table.columns(2)
+              .search(keyword)
+              .draw();
+            });
+            // filter Company
+            $('#filter-company').change(function (){
+              var keyword = $('#filter-company').val();
+              table.columns(3)
+              .search(keyword)
+              .draw();
+            });
+            
+          });
     </script>
      @endpush
 @endsection

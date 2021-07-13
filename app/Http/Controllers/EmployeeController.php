@@ -20,6 +20,7 @@ class EmployeeController extends Controller
     public function index()
     {
 
+        $company = Company::all();
         $employee = Employee::join('companies', 'companies.id', '=', 'employees.company')
             ->get(['employees.*', 'companies.name']);
         if (request()->ajax()) {
@@ -29,7 +30,8 @@ class EmployeeController extends Controller
                 ->make(true);
         }
         $data = [
-            'employees' => $employee
+            'employees' => $employee,
+            'companies' => $company
         ];
 
         return view('employees/employees', $data);

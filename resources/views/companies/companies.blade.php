@@ -40,6 +40,22 @@
                 <button class="btn btn-primary">Import data</button>
                 <a href="{{route('export-company')}}" class="btn btn-success">Export Data</a>
               </div>
+              <div class="col-md-8">
+                <p>
+                  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Filter Data
+                  </a>
+                </p>
+                <div class="collapse" id="collapseExample">
+                  <div class="card card-body">
+                    <div class="form-group">
+                      <input type="text" id="filter-company" name="name" placeholder="Company Name...">
+                      <input type="text" id="filter-email" name="email" placeholder="Email...">
+                      <input type="text" id="filter-website" name="website" placeholder="Website...">
+                  </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
 
@@ -129,7 +145,29 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 <script>
   $(document).ready(function() {
-    $('#table2').DataTable();
+    
+   var table =  $('#table2').DataTable();
+     // filter Company
+     $('#filter-company').keyup(function (){
+              var keyword = $('#filter-company').val();
+              table.columns(1)
+              .search(keyword)
+              .draw();
+            });
+     // filter Email
+     $('#filter-email').keyup(function (){
+              var keyword = $('#filter-email').val();
+              table.columns(2)
+              .search(keyword)
+              .draw();
+            });
+     // filter Company
+     $('#filter-website').keyup(function (){
+              var keyword = $('#filter-website').val();
+              table.columns(4)
+              .search(keyword)
+              .draw();
+            });
 } );
 </script>
 @endpush
