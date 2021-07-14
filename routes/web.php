@@ -33,25 +33,32 @@ Route::get('locale/{locale}', function ($locale) {
 //     return view('employees');
 // });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-});
-Route::resource('companies', CompanyController::class);
-Route::resource('employees', EmployeeController::class);
-
+// Route::group([
+//     'middleware' => 'web',
+//     'prefix' => 'auth'
+// ], function ($router) {
+//     // $token = Session::get('token');
+//     // if ($token != null) {
+//     //     Route::resource('companies', CompanyController::class);
+//     //     Route::resource('employees', EmployeeController::class);
+//     // }
+// });
 Route::post('login-with-jwt', [AuthController::class, 'loginWithJwt']);
 Route::get('/', [AuthController::class, 'index']);
 
+
 // Route::post('login', [LoginController::class, 'loginJwt'])->name('login');
+Route::middleware('session.has.token')->group(function () {
+    Route::post('logout-with-jwt', [AuthController::class, 'logoutWithJwt'])->name('logout-with-jwt');
+    Route::resource('companies', CompanyController::class);
+    Route::resource('employees', EmployeeController::class);
+    Route::post('import_companies', [CompanyController::class, 'importCompany'])->name('import_company');
+    Route::get('export_companies', [CompanyController::class, 'exportCompany'])->name('export-company');
+    Route::post('import_employees', [EmployeeController::class, 'importEmployee'])->name('import-employee');
+    Route::get('export_employees', [EmployeeController::class, 'exportEmployee'])->name('export-employee');
+});
 
-Route::post('logout-with-jwt', [AuthController::class, 'logoutWithJwt'])->name('logout-with-jwt');
 
-Route::post('import_companies', [CompanyController::class, 'importCompany'])->name('import_company');
-Route::get('export_companies', [CompanyController::class, 'exportCompany'])->name('export-company');
-Route::post('import_employees', [EmployeeController::class, 'importEmployee'])->name('import-employee');
-Route::get('export_employees', [EmployeeController::class, 'exportEmployee'])->name('export-employee');
 
 
 // Auth::routes();

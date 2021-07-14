@@ -84,6 +84,7 @@
                     <th scope="col">{{__('action')}}</th>
                   </tr>
                 </thead>
+               
                 {{-- <tbody>
                   <?php $no = 1; ?>
                   @foreach ($employees as $data)    
@@ -152,6 +153,7 @@
     @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.25/pagination/input.js"></script>
    
 
     <script>
@@ -162,11 +164,7 @@
             var table =  $('#tabel1').DataTable({
             serverside : true,
             responsive : true,
-            // infoCallback:function(){
-            //   var pageInfo = api.page()
-
-            //   console.log(pageInfo);
-            // }
+            pagingType: "input",
             ajax:{
               url:"{{route('employees.index')}}"
               // data : function (d){
@@ -190,9 +188,7 @@
               order:[[0,'asc']],
               iDisplayLength :10,
               aLengthMenu : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-              
           })
-
             // filter First Name
             $('#filter-name').keyup(function (){
               var keyword = $('#filter-name').val();

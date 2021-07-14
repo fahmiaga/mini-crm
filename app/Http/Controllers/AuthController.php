@@ -6,10 +6,16 @@ use App\Models\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:web', ['except' => ['login']]);
+    // }
+
     public function index()
     {
 
@@ -45,13 +51,14 @@ class AuthController extends Controller
             return redirect()->back();
         }
 
+        Session::put('token', $token);
+
         return redirect('companies');
     }
 
-    public function logoutWithJwt()
+    public function logoutWithJwt(Request $request)
     {
-        // auth()->logout();
-        // JWTAuth::
-        // return redirect('/');
+        Session::forget('token');
+        return redirect('/');
     }
 }

@@ -143,10 +143,14 @@
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.25/pagination/input.js"></script>
 <script>
   $(document).ready(function() {
     
-   var table =  $('#table2').DataTable();
+   var table =  $('#table2').DataTable({
+     responsive : true,
+     pagingType: "input",
+   });
      // filter Company
      $('#filter-company').keyup(function (){
               var keyword = $('#filter-company').val();

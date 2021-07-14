@@ -8,17 +8,27 @@ use App\Jobs\NewCompanyJob;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyController extends Controller
 {
+    // public function __construct()
+    // {
+    // $this->middleware('auth:web', ['except' => ['login']]);
+    //     $token = Session::get('token');
+    //     if ($token == null) {
+    //         return redirect('/')->with('message', 'You have to login first');
+    //     }
+    // }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $data = [
             'companies' => Company::all()
         ];
