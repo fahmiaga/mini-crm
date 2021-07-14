@@ -109,9 +109,9 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="{{ route('logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
+                                        <a href="{{ route('logout-with-jwt') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">Sign out</a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('logout-with-jwt') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
                                     </div>

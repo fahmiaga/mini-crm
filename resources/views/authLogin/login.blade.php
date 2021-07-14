@@ -26,6 +26,15 @@
     <div class="login">
             <div class="account-login">
                <h1>Login</h1>
+
+               @if (session('message'))
+                    <div class="alert alert-danger alert-dismissible mt-1">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                    {{session('message')}}
+                    </div>
+               @endif
+
                <form action="{{url('login-with-jwt')}}" method="POST">
                 @csrf
                   <div class="form-group">

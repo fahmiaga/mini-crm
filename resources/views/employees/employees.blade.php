@@ -162,6 +162,11 @@
             var table =  $('#tabel1').DataTable({
             serverside : true,
             responsive : true,
+            // infoCallback:function(){
+            //   var pageInfo = api.page()
+
+            //   console.log(pageInfo);
+            // }
             ajax:{
               url:"{{route('employees.index')}}"
               // data : function (d){
