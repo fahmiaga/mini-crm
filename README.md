@@ -1,7 +1,7 @@
 <h2>How To Install</h2>
 <ul>
     <li>Go to code, and copy the link</li>
-    <li>Open your terminal (you can use commanp prompt,powershell,etc). And type "git clone <paste the link that you have copied>" </li>
+    <li>Open your terminal (you can use commanp prompt,powershell,etc). And type "git clone {paste the link that you have copied}" </li>
     <li>Once project have been cloned, type "composer install" , it will install all libraries </li>
     <li>Open your database server and create new database </li>
     <li>Named a database same as database's name on project (you can goto .env file DB_DATABASE)</li>
