@@ -32,7 +32,7 @@ class CompanyController extends Controller
         $date = Company::pluck('created_at');
         foreach ($date as $da) {
             $timezone = Carbon::parse($da)->setTimezone('UTC');
-            dd($timezone);
+            // dd($timezone);
         }
         $data = [
             'companies' => Company::all()
