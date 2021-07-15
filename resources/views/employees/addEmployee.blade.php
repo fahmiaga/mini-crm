@@ -76,6 +76,14 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="">Timezone</label>
+                        <select class="form-control" name="timezone" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">Asia/Singapure</option>
+                            <option value="2">Asia/Indonesia</option>
+                          </select>
+                    </div>
 
                     <div class="form-group">
                         <button class="btn btn-primary">{{__('Submit')}}</button>

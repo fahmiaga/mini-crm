@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+    const CREATED_AT = null;
+    const UPDATED_AT = null;
     protected $table = 'employees';
-    protected $fillable = ['first_name', 'last_name', 'company', 'email', 'phone'];
+    protected $fillable = ['first_name', 'last_name', 'company', 'email', 'phone', 'created_at', 'updated_at'];
 }

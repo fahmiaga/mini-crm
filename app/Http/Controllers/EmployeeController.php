@@ -6,6 +6,7 @@ use App\Exports\EmployeeExport;
 use App\Imports\EmployeeImport;
 use App\Models\Company;
 use App\Models\Employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -64,12 +65,23 @@ class EmployeeController extends Controller
             'phone' => 'required|numeric|digits_between:10,12',
         ]);
 
+        $timestap = date('Y-m-d H:i:s');
+        $created = null;
+
+        if ($request->timezone == 1) {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
+        } else {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
+        }
+
         Employee::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'company' => $request->input('company'),
             'email' => $request->email,
             'phone' => $request->phone,
+            'created_at' => $created,
+            'updated_at' => $created,
         ]);
 
         return redirect('employees')->with('message', 'Employee Successfully Added');
@@ -120,12 +132,24 @@ class EmployeeController extends Controller
             'phone' => 'required|numeric|digits_between:10,12',
         ]);
 
+
+        $timestap = date('Y-m-d H:i:s');
+        $created = null;
+
+        if ($request->timezone == 1) {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
+        } else {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
+        }
+
         $employee_id->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'company' => $request->input('company'),
             'email' => $request->email,
             'phone' => $request->phone,
+            'phone' => $request->phone,
+            'created_at' => $created,
         ]);
 
         return redirect('employees')->with('message', 'Employee Successfully Updated');

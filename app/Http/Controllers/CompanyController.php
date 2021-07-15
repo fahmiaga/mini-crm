@@ -6,6 +6,7 @@ use App\Exports\CompanyExport;
 use App\Imports\CompanyImport;
 use App\Jobs\NewCompanyJob;
 use App\Models\Company;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -28,7 +29,11 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-
+        $date = Company::pluck('created_at');
+        foreach ($date as $da) {
+            $timezone = Carbon::parse($da)->setTimezone('UTC');
+            dd($timezone);
+        }
         $data = [
             'companies' => Company::all()
         ];
@@ -67,12 +72,23 @@ class CompanyController extends Controller
         $fileName = $time . '.' . $file->extension();
         $file->move(public_path('logo'), $fileName);
 
+        $timestap = date('Y-m-d H:i:s');
+        $created = null;
+
+        if ($request->timezone == 1) {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
+        } else {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
+        }
+
 
         $data =  Company::create([
             'name' => $request->name,
             'email' => $request->email,
             'logo' => $fileName,
             'website' => $request->website,
+            'created_at' => $created,
+            'updated_at' => $created
         ]);
 
         // Mail::send(
@@ -140,11 +156,22 @@ class CompanyController extends Controller
             $fileName = $request->old_logo;
         }
 
+        $timestap = date('Y-m-d H:i:s');
+        $created = null;
+
+        if ($request->timezone == 1) {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
+        } else {
+            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
+        }
+
         $company_id->update([
             'name' => $request->name,
             'email' => $request->email,
             'logo' => $fileName,
             'website' => $request->website,
+            'created_at' => $created,
+            'updated_at' => $created
         ]);
 
         return redirect('companies')->with('message', 'Company Successfully Updated');
