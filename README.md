@@ -1,3 +1,16 @@
+<h2>How To Install</h2>
+<ul>
+    <li>Go to code, and copy the link</li>
+    <li>Open your terminal (you can use commanp prompt,powershell,etc). And type "git clone {paste the link that you have copied}" </li>
+    <li>Once project have been cloned, type "composer install" , it will install all libraries </li>
+    <li>Open your database server and create new database </li>
+    <li>Named a database same as database's name on project (you can goto .env file DB_DATABASE)</li>
+    <li>Then go to your terminal and type "php artisan migrate", it will migrate all tables</li>
+    <li>Then type "php artisan db:seed" </li>
+    <li>Run your project by typing "php artisan serve"</li>
+    <li>login with email: admin@admin.com and password: password</li>
+</ul>
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
