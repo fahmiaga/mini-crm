@@ -24,12 +24,12 @@
           </div>
         </div>
         <div class="box-body">
-         
-         <form action="{{url('employees/'.$employee->id)}}" method="POST">
-        @csrf
-        <input type="hidden" name="_method" value="PATCH">
+              
         <div class="container">
             <div class="row">
+                <form action="{{url('employees/'.$employee->id)}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="_method" value="PATCH">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">{{__('First Name')}}</label>
@@ -82,11 +82,35 @@
                         <button class="btn btn-primary">Submit</button>
                     </div>
                 </div>
+                
+                </form>
+                <div class="col-md-6">
+                    <form action="{{url('change-password/'.$employee->id)}}" method="POST">
+                        @csrf
+                        {{-- <input type="hidden" name="_method" value="PATCH"> --}}
+                        @if (session('message'))
+                            <div class="alert alert-success alert-dismissible mt-1">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                            {{session('message')}}
+                            </div>
+                        @endif
+                        <div class="form-group">
+                            <label for="">Password</label>
+                            <input type="text" name="password" class="form-control" placeholder="Password..."  @error('password') is-invalid @enderror >
+                            <div class="text-danger">
+                                @error('password')
+                                    {{$message}}
+                                @enderror
+                            </div>
+                            <button class="btn btn-primary" style="margin-top: 5px">Change Password</button>
+                            </div>
+                        </form>
+                    </div>
             </div>
         </div>
         
 
-        </form>
           
         </div>
         <!-- /.box-body -->

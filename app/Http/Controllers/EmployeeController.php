@@ -9,6 +9,8 @@ use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -18,9 +20,8 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
         $company = Company::all();
         $employee = Employee::join('companies', 'companies.id', '=', 'employees.company')
             ->get(['employees.*', 'companies.name']);
@@ -63,6 +64,7 @@ class EmployeeController extends Controller
             'last_name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|numeric|digits_between:10,12',
+            'password' => 'required'
         ]);
 
         $timestap = date('Y-m-d H:i:s');
@@ -73,6 +75,7 @@ class EmployeeController extends Controller
         } else {
             $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
         }
+        $user = Session::get('user');
 
         Employee::create([
             'first_name' => $request->first_name,
@@ -80,6 +83,9 @@ class EmployeeController extends Controller
             'company' => $request->input('company'),
             'email' => $request->email,
             'phone' => $request->phone,
+            'password' => Hash::make('password'),
+            'created_by_id' => $user->id,
+            'updated_by_id' => $user->id,
             'created_at' => $created,
             'updated_at' => $created,
         ]);
@@ -142,14 +148,18 @@ class EmployeeController extends Controller
             $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
         }
 
+        $user = Session::get('user');
+
         $employee_id->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'company' => $request->input('company'),
             'email' => $request->email,
             'phone' => $request->phone,
-            'phone' => $request->phone,
+            'created_by_id' => $user->id,
+            'updated_by_id' => $user->id,
             'created_at' => $created,
+            'updated_at' => $created,
         ]);
 
         return redirect('employees')->with('message', 'Employee Successfully Updated');
@@ -178,5 +188,30 @@ class EmployeeController extends Controller
     public function exportEmployee()
     {
         return Excel::download(new EmployeeExport, 'employee-list.xlsx');
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required'
+        ]);
+
+        $employee_id = Employee::find($id);
+        $employee_id->update([
+            'password' => Hash::make('password')
+        ]);
+        return redirect()->back()->with('message', 'Password Changed!');
+    }
+
+    public function get_employees_by_company_id($id)
+    {
+        $employees = Employee::where('company', $id)->get();
+
+        $response = [
+            'status' => 200,
+            'message' => 'Success',
+            'data' => $employees
+        ];
+        return response()->json($response, 200);
     }
 }

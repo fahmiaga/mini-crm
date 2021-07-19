@@ -50,15 +50,38 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($req)) {
             return redirect()->back();
         }
-
+        // dd($token);
         Session::put('token', $token);
+        Session::put('user', $user);
 
+        // $token_sanctum = $user->createToken('token-sanctum')->plainTextToken;
+        // dd($token_sanctum);
         return redirect('companies');
     }
 
-    public function logoutWithJwt(Request $request)
+    public function logoutWithJwt()
     {
         Session::forget('token');
+        Session::forget('user');
         return redirect('/');
+    }
+
+    public function loginWithSanctum(Request $request)
+    {
+        $req = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $req['email'])->first();
+        $token = $user->createToken('token-sanctum')->plainTextToken;
+
+        $response = [
+            'status' => 200,
+            'message' => 'Success login',
+            'token' => $token
+        ];
+
+        return response()->json($response, 200);
     }
 }

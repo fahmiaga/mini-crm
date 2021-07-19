@@ -20,6 +20,9 @@ class CreateEmployeesTable extends Migration
             $table->integer('company');
             $table->string('email');
             $table->string('phone');
+            $table->string('password')->nullable();
+            $table->bigInteger('created_by_id');
+            $table->bigInteger('updated_by_id');
             $table->timestamps();
         });
     }

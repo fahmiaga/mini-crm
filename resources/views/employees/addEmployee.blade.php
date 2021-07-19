@@ -77,6 +77,15 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password..."  @error('password') is-invalid @enderror value="{{old('password')}}">
+                        <div class="text-danger">
+                            @error('password')
+                                {{$message}}
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="">Timezone</label>
                         <select class="form-control" name="timezone" aria-label="Default select example">
                             <option selected>Open this select menu</option>

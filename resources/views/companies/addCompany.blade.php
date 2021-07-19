@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="">{{__('name')}}</label>
+                        <label for="">{{__('translate.name')}}</label>
                         <input type="text" name="name" class="form-control" placeholder="{{__('name')}}..." @error('name') is-invalid @enderror value="{{old('name')}}">
                         <div class="text-danger">
                             @error('name')
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="">{{__('email')}}</label>
+                        <label for="">{{__('Email')}}</label>
                         <input type="text" name="email" class="form-control" placeholder="{{__('email')}}..."  @error('email') is-invalid @enderror value="{{old('email')}}">
                         <div class="text-danger">
                             @error('email')
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="">{{__('website')}}</label>
+                        <label for="">{{__('translate.website')}}</label>
                         <input type="text" name="website" class="form-control" placeholder="{{__('website')}}..."  @error('website') is-invalid @enderror value="{{old('website')}}">
                         <div class="text-danger">
                             @error('website')
@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="">{{__('Company')}}</label>
+                        <label for="">{{__('translate.company')}}</label>
                         <select class="form-control" name="timezone" aria-label="Default select example">
                             <option selected>Open this select menu</option>
                             <option value="1">Asia/Singapure</option>

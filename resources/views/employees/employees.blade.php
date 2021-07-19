@@ -1,5 +1,5 @@
 @extends('Admin.layout')
-@section('title',__('employees page'))
+@section('title',__('translate.employees page'))
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -11,7 +11,7 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">{{__('employees page')}}</h3>
+              <h3 class="box-title">{{__('translate.employees_page')}}</h3>
     
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"

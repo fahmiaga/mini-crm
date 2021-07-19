@@ -20,8 +20,11 @@ class EmployeeImport implements ToModel
             'company' => $row[3],
             'email' => $row[4],
             'phone' => $row[5],
-            'created_at' => date($row[6]),
-            'updated_at' => date($row[7]),
+            'password' => $row[6],
+            'created_by_id' => $row[7],
+            'updated_by_id' => $row[8],
+            'created_at' => date($row[9]),
+            'updated_at' => date($row[10]),
         ]);
     }
 }

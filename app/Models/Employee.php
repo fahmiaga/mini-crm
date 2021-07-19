@@ -11,5 +11,5 @@ class Employee extends Model
     const CREATED_AT = null;
     const UPDATED_AT = null;
     protected $table = 'employees';
-    protected $fillable = ['first_name', 'last_name', 'company', 'email', 'phone', 'created_at', 'updated_at'];
+    protected $fillable = ['first_name', 'last_name', 'company', 'email', 'phone', 'created_at', 'updated_at', 'password', 'created_by_id', 'updated_by_id'];
 }

@@ -13,7 +13,7 @@
         <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">{{__('companies page')}}</h3>
+          <h3 class="box-title">{{__('translate.companies_page')}}</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -28,7 +28,7 @@
             @csrf
             <div class="row" style="margin-bottom:5px">
               <div class="col-md-2">
-                <a href="{{url('companies/create')}}" class="btn btn-primary mb-2" style="margin-bottom: 10px">{{__('add company')}}</a>
+                <a href="{{url('companies/create')}}" class="btn btn-primary mb-2" style="margin-bottom: 10px">{{__('translate.add_company')}}</a>
               </div>
               <div class="col-md-2">
                 <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
@@ -73,11 +73,11 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">{{__('name')}}</th>
+                <th scope="col">{{__('translate.name')}}</th>
                 <th scope="col">{{__('email')}}</th>
                 <th scope="col">{{__('logo')}}</th>
                 <th scope="col">{{__('website')}}</th>
-                <th scope="col">{{__('action')}}</th>
+                <th scope="col">{{__('translate.action')}}</th>
               </tr>
             </thead>
             <tbody>
