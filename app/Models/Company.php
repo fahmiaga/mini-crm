@@ -13,5 +13,5 @@ class Company extends Model
     const CREATED_AT = null;
     const UPDATED_AT = null;
     protected $table = 'companies';
-    protected $fillable = ['name', 'email', 'logo', 'website', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'email', 'logo', 'website', 'timezone', 'created_at', 'updated_at'];
 }

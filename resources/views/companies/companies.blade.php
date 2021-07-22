@@ -52,6 +52,11 @@
                       <input type="text" id="filter-company" name="name" placeholder="Company Name...">
                       <input type="text" id="filter-email" name="email" placeholder="Email...">
                       <input type="text" id="filter-website" name="website" placeholder="Website...">
+                      <select name="timezone" id="filter-timezone">
+                        <option value=""> Choose Timezone </option>
+                        <option value="Asia/Singapore"> Asia/Singapore </option>
+                        <option value="Asia/Jakarta"> 	Asia/Jakarta </option>
+                     </select>
                   </div>
                   </div>
                 </div>
@@ -77,6 +82,7 @@
                 <th scope="col">{{__('email')}}</th>
                 <th scope="col">{{__('logo')}}</th>
                 <th scope="col">{{__('website')}}</th>
+                <th scope="col">{{__('Timezone')}}</th>
                 <th scope="col">{{__('translate.action')}}</th>
               </tr>
             </thead>
@@ -89,6 +95,7 @@
                   <td>{{$data->email}}</td>
                   <td><img src="{{url('logo/'.$data->logo)}}" alt="" width="80px" height="80px"></td>
                   <td>{{$data->website}}</td>
+                  <td>{{$data->timezone}}</td>
                   <td>
                     <a href="{{url('companies/'.$data->id.'/edit')}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                    
@@ -169,6 +176,13 @@
      $('#filter-website').keyup(function (){
               var keyword = $('#filter-website').val();
               table.columns(4)
+              .search(keyword)
+              .draw();
+            });
+    // filter Company
+      $('#filter-timezone').change(function (){
+              var keyword = $('#filter-timezone').val();
+              table.columns(5)
               .search(keyword)
               .draw();
             });

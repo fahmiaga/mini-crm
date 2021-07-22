@@ -1,5 +1,5 @@
 @extends('Admin.layout')
-@section('title',__('translate.employees page'))
+@section('title',__('translate.employees_page'))
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -211,6 +211,7 @@
               .search(keyword)
               .draw();
             });
+            
             
           });
     </script>

@@ -156,7 +156,7 @@ class EmployeeController extends Controller
             'company' => $request->input('company'),
             'email' => $request->email,
             'phone' => $request->phone,
-            'created_by_id' => $user->id,
+            // 'created_by_id' => $user->id,
             'updated_by_id' => $user->id,
             'created_at' => $created,
             'updated_at' => $created,

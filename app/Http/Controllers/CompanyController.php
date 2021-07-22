@@ -74,11 +74,14 @@ class CompanyController extends Controller
 
         $timestap = date('Y-m-d H:i:s');
         $created = null;
+        $timezone_ = null;
 
         if ($request->timezone == 1) {
             $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
+            $timezone_ = 'Asia/Singapore';
         } else {
             $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
+            $timezone_ = 'Asia/Jakarta';
         }
 
 
@@ -87,6 +90,7 @@ class CompanyController extends Controller
             'email' => $request->email,
             'logo' => $fileName,
             'website' => $request->website,
+            'timezone' => $timezone_,
             'created_at' => $created,
             'updated_at' => $created
         ]);
@@ -158,11 +162,14 @@ class CompanyController extends Controller
 
         $timestap = date('Y-m-d H:i:s');
         $created = null;
+        $timezone_ = null;
 
         if ($request->timezone == 1) {
             $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
+            $timezone_ = 'Asia/Singapore';
         } else {
             $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
+            $timezone_ = 'Asia/Jakarta';
         }
 
         $company_id->update([
@@ -170,7 +177,8 @@ class CompanyController extends Controller
             'email' => $request->email,
             'logo' => $fileName,
             'website' => $request->website,
-            'created_at' => $created,
+            'timezone' => $timezone_,
+            // 'created_at' => $created,
             'updated_at' => $created
         ]);
 

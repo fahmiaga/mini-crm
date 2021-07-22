@@ -84,9 +84,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="">{{__('translate.company')}}</label>
+                        <label for="">{{__('Timezone')}}</label>
                         <select class="form-control" name="timezone" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
+                            <option selected>Open this select Timezone</option>
                             <option value="1">Asia/Singapure</option>
                             <option value="2">Asia/Indonesia</option>
                           </select>
