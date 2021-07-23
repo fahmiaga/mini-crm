@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\TimezoneController\listTimezone;
 use App\Exports\CompanyExport;
 use App\Imports\CompanyImport;
 use App\Jobs\NewCompanyJob;
 use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
@@ -29,13 +31,11 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $date = Company::pluck('created_at');
-        foreach ($date as $da) {
-            $timezone = Carbon::parse($da)->setTimezone('UTC');
-            // dd($timezone);
-        }
+        $timezone = app('App\Http\Controllers\TimezoneController')->listTimezone();
+
         $data = [
-            'companies' => Company::all()
+            'companies' => Company::all(),
+            'timezone' => $timezone
         ];
 
         return view('companies/companies', $data);
@@ -72,17 +72,18 @@ class CompanyController extends Controller
         $fileName = $time . '.' . $file->extension();
         $file->move(public_path('logo'), $fileName);
 
-        $timestap = date('Y-m-d H:i:s');
-        $created = null;
-        $timezone_ = null;
+        // $timestap = date('Y-m-d H:i:s');
+        // $created = null;
+        // $timezone_ = Carbon::now();
+        // dd($timezone_);
 
-        if ($request->timezone == 1) {
-            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
-            $timezone_ = 'Asia/Singapore';
-        } else {
-            $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
-            $timezone_ = 'Asia/Jakarta';
-        }
+        // if ($request->timezone == 1) {
+        //     $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Singapore');
+        //     $timezone_ = 'Asia/Singapore';
+        // } else {
+        //     $created =  Carbon::createFromFormat('Y-m-d H:i:s', $timestap)->timezone('Asia/Jakarta');
+        //     $timezone_ = 'Asia/Jakarta';
+        // }
 
 
         $data =  Company::create([
@@ -90,9 +91,8 @@ class CompanyController extends Controller
             'email' => $request->email,
             'logo' => $fileName,
             'website' => $request->website,
-            'timezone' => $timezone_,
-            'created_at' => $created,
-            'updated_at' => $created
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ]);
 
         // Mail::send(
@@ -178,7 +178,7 @@ class CompanyController extends Controller
             'logo' => $fileName,
             'website' => $request->website,
             'timezone' => $timezone_,
-            // 'created_at' => $created,
+            'created_at' => $created,
             'updated_at' => $created
         ]);
 
@@ -211,5 +211,30 @@ class CompanyController extends Controller
     public function exportCompany()
     {
         return Excel::download(new CompanyExport, 'company-list.xlsx');
+    }
+
+    public function getTimezone(Request $request)
+    {
+        // $created_at = Company::pluck('created_at');
+        $timezone = $request->timezone;
+
+        $companies = Company::all();
+
+        $result = [];
+        foreach ($companies as $company) {
+            $formatTime = Carbon::createFromFormat('Y-m-d H:i:s', $company->created_at, 'UTC');
+            $temp =  $formatTime->setTimezone($timezone);
+            array_push($result, $temp);
+            // dd($company->created_at);
+        }
+        // dd($result);
+        $timezoneTemp = app('App\Http\Controllers\TimezoneController')->listTimezone();
+
+        $data = [
+            'companies' => Company::all(),
+            'created_at' => $result,
+            'timezone' => $timezoneTemp
+        ];
+        return view('companies/timezone', $data);
     }
 }

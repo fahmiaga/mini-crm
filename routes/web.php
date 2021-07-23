@@ -57,6 +57,7 @@ Route::middleware('session.has.token')->group(function () {
     Route::post('import_employees', [EmployeeController::class, 'importEmployee'])->name('import-employee');
     Route::get('export_employees', [EmployeeController::class, 'exportEmployee'])->name('export-employee');
     Route::post('change-password/{id}', [EmployeeController::class, 'changePassword'])->name('change-password/{id}');
+    Route::post('get-timezone', [CompanyController::class, 'getTimezone']);
 });
 
 

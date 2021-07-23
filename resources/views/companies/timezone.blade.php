@@ -52,8 +52,8 @@
                     <div class="form-group">
                       <input type="text" id="filter-company" name="name" placeholder="Company Name...">
                       <input type="text" id="filter-email" name="email" placeholder="Email...">
-                      <input type="text" id="filter-website" name="website" placeholder="Website..." style="margin-top: 5px">
-                      <input type="date" id="filter-date" name="created_at" placeholder="Created At..." style="margin-top: 5px">
+                      <input type="text" id="filter-website" name="website" placeholder="Website...">
+                      <input type="date" id="filter-date" name="created_at" placeholder="Created At...">
                       
                   </div>
                   </div>
@@ -101,18 +101,20 @@
             </thead>
             <tbody>
               <?php $no = 1; ?>
-              @foreach ($companies as $data)    
+              @foreach ($companies as $data => $value)    
                 <tr>
                   <th scope="row">{{$no++}}</th>
-                  <td>{{$data->name}}</td>
-                  <td>{{$data->email}}</td>
-                  <td><img src="{{url('logo/'.$data->logo)}}" alt="" width="80px" height="80px"></td>
-                  <td>{{$data->website}}</td>
-                  <td>{{ $data->created_at }}</td>
+                  <td>{{$value->name}}</td>
+                  <td>{{$value->email}}</td>
+                  <td><img src="{{url('logo/'.$value->logo)}}" alt="" width="80px" height="80px"></td>
+                  <td>{{$value->website}}</td>
                   <td>
-                    <a href="{{url('companies/'.$data->id.'/edit')}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                      {{ $created_at[$data] }}
+                  </td>
+                  <td>
+                    <a href="{{url('companies/'.$value->id.'/edit')}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                    
-                      <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-danger{{$data->id}}"><i class="fas fa-trash"></i></button>
+                      <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-danger{{$value->id}}"><i class="fas fa-trash"></i></button>
                    
                   </td>
                 </tr>

@@ -19,6 +19,7 @@ class CompanyImport implements ToModel
             'email' => $row[2],
             'logo' => $row[3],
             'website' => $row[4],
+            // 'timezone' => $row[5],
             'created_at' => date($row[5]),
             'updated_at' => date($row[6]),
         ]);

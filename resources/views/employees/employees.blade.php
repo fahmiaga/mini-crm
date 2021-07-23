@@ -50,6 +50,7 @@
                         <div class="form-group">
                           <input type="text" id="filter-name" name="first_name" placeholder="First Name...">
                           <input type="text" id="filter-last" name="last_name" placeholder="Last Name...">
+                          <input type="date" id="filter-date" name="created_at" placeholder="Created At...">
                          <select name="company" id="filter-company">
                             <option value=""> Choose Company </option>
                             @foreach ($companies as $data)
@@ -81,6 +82,7 @@
                     <th scope="col">{{__('Company')}}</th>
                     <th scope="col">{{__('email')}}</th>
                     <th scope="col">{{__('Phone')}}</th>
+                    <th scope="col">{{__('Created At')}}</th>
                     <th scope="col">{{__('action')}}</th>
                   </tr>
                 </thead>
@@ -183,6 +185,7 @@
                 {data: 'name', name:'name'},
                 {data: 'email', name:'email'},
                 {data: 'phone', name:'phone'},
+                {data: 'created_at', name:'created_at'},
                 {data: 'action', name:'action',orderable: false},
             ],
               order:[[0,'asc']],
@@ -211,7 +214,14 @@
               .search(keyword)
               .draw();
             });
-            
+             // filter Date
+     $('#filter-date').on('change',function(){
+      var keyword = $('#filter-date').val();
+      console.log(keyword)
+       table.columns(6)
+       .search(keyword)
+       .draw();
+     })
             
           });
     </script>
