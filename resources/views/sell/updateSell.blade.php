@@ -26,31 +26,53 @@
             </div>
             <div class="box-body">
 
-                <form action="{{ url('items') }}" method="POST">
+                <form action="{{ url('sells/' . $model->id) }}" method="POST">
                     @csrf
+                    <input type="hidden" name="_method" value="PATCH">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">{{ __('translate.name') }}</label>
-                                    <input type="text" name="name" class="form-control" placeholder="{{ __('name') }}..."
-                                        @error('name') is-invalid @enderror value="{{ old('name') }}">
-                                    <div class="text-danger">
-                                        @error('name')
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
+                                    <label for="">{{ __('Item') }}</label>
+                                    <select class="form-control" name="item" aria-label="Default select example">
+                                        @foreach ($items as $data)
+                                            <option value={{ $data->id }}
+                                                {{ $data->id == $model->item ? 'selected' : '' }}>{{ $data->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">{{ __('Price') }}</label>
                                     <input type="text" name="price" class="form-control"
                                         placeholder="{{ __('price') }}..." @error('price') is-invalid @enderror
-                                        value="{{ old('price') }}">
+                                        value="{{ $model->price }}">
                                     <div class="text-danger">
                                         @error('price')
                                             {{ $message }}
                                         @enderror
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">{{ __('Discount') }}</label>
+                                    <input type="text" name="discount" class="form-control"
+                                        placeholder="{{ __('discount') }}..." @error('discount') is-invalid @enderror
+                                        value="{{ $model->discount }}">
+                                    <div class="text-danger">
+                                        @error('discount')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">{{ __('Employee') }}</label>
+                                    <select class="form-control" name="employee" aria-label="Default select example">
+                                        @foreach ($employees as $data)
+                                            <option value={{ $data->id }}
+                                                {{ $data->id == $model->employee ? 'selected' : '' }}>
+                                                {{ $data->first_name }} {{ $data->last_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group">

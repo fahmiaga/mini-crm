@@ -19,6 +19,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
+          <li><a href="/sells"><i class="fa fa-circle-o"></i> Sale</a></li>
           <li><a href="index2.html"><i class="fa fa-circle-o"></i> Sell Summary</a></li>
         </ul>
       </li>

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\SellController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,7 @@ Route::middleware('session.has.token')->group(function () {
     Route::resource('companies', CompanyController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('items', ItemController::class);
+    Route::resource('sells', SellController::class);
     Route::post('import_companies', [CompanyController::class, 'importCompany'])->name('import_company');
     Route::get('export_companies', [CompanyController::class, 'exportCompany'])->name('export-company');
     Route::post('import_employees', [EmployeeController::class, 'importEmployee'])->name('import-employee');
