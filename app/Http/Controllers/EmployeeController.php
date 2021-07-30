@@ -83,7 +83,7 @@ class EmployeeController extends Controller
             'company' => $request->input('company'),
             'email' => $request->email,
             'phone' => $request->phone,
-            'password' => Hash::make('password'),
+            'password' => Hash::make($request->password),
             'created_by_id' => $user->id,
             'updated_by_id' => $user->id,
             'created_at' => $created,
