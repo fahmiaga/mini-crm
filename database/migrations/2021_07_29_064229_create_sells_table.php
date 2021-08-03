@@ -17,9 +17,9 @@ class CreateSellsTable extends Migration
             $table->id();
             $table->bigInteger('item');
             $table->bigInteger('price');
-            $table->decimal('discount');
+            $table->bigInteger('discount');
             $table->bigInteger('employee');
-            $table->date('created_date');
+            $table->dateTime('created_date');
         });
     }
 

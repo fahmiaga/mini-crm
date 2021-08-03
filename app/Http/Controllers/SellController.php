@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Item;
 use App\Models\Sell;
+use App\Models\SellSummary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -56,6 +57,8 @@ class SellController extends Controller
             'employee' => 'required',
         ]);
 
+        // dd(Carbon::now());
+
         Sell::create([
             'item' => $request->item,
             'price' => $request->price,
@@ -63,6 +66,46 @@ class SellController extends Controller
             'employee' => $request->employee,
             'created_date' => Carbon::now()
         ]);
+
+
+        $employee = SellSummary::where('employee', $request->employee)->first();
+
+        if (!$employee) {
+            SellSummary::create([
+                'date' => Carbon::now(),
+                'employee' => $request->employee,
+                'created_date' => Carbon::now(),
+                'last_update' => Carbon::now(),
+                'price_total' => $request->price,
+                'discount_total' => ($request->discount / 100) * $request->price,
+                'total' => $request->price - (($request->discount / 100) * $request->price)
+            ]);
+        } else {
+            // Total Price
+            $price_total = Sell::where('employee', $request->employee)->sum('price');
+
+            // Total Discount
+            $discount_list = Sell::selectRaw('(discount/100) * price as discount_')->where('employee', $request->employee)->get();
+            $discount_total = null;
+            foreach ($discount_list as $dsc) {
+                $discount_total += intval($dsc->discount_);
+            }
+
+            // Total Sale
+            $total_ = $price_total - $discount_total;
+
+            $employee->update([
+                'date' => Carbon::now(),
+                'employee' => $request->employee,
+                // 'created_date' => Carbon::now(),
+                'last_update' => Carbon::now(),
+                'price_total' => $price_total,
+                'discount_total' => $discount_total,
+                'total' => $total_
+            ]);
+        }
+
+
 
         return redirect('sells')->with('message', 'Sell Successfully added');
     }

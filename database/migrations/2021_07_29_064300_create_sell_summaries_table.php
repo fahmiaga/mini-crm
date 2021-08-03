@@ -17,10 +17,10 @@ class CreateSellSummariesTable extends Migration
             $table->id();
             $table->date('date');
             $table->bigInteger('employee');
-            $table->date('created_date');
-            $table->date('last_update');
+            $table->dateTime('created_date');
+            $table->dateTime('last_update');
             $table->bigInteger('price_total');
-            $table->decimal('discount_total');
+            $table->bigInteger('discount_total');
             $table->bigInteger('total');
         });
     }

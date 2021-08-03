@@ -20,7 +20,18 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="/sells"><i class="fa fa-circle-o"></i> Sale</a></li>
-          <li><a href="index2.html"><i class="fa fa-circle-o"></i> Sell Summary</a></li>
+          <li class="treeview">
+              <a href="#"><i class="fa fa-circle-o"></i> Sell Summaries
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="/sells-summary-per-day"><i class="fa fa-circle-o"></i> Per Day</a></li>
+                <li><a href="/sells-summary"><i class="fa fa-circle-o"></i> Per Employees</a></li>
+       
+              </ul>
+            </li>
         </ul>
       </li>
 </ul>

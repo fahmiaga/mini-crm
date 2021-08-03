@@ -24,14 +24,9 @@
           </div>
         </div>
         <div class="box-body">
-          <form action="{{ route('import_company')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="row" style="margin-bottom:5px">
-              <div class="col-md-2">
-                <a href="{{url('items/create')}}" class="btn btn-primary mb-2" style="margin-bottom: 10px">{{__('Add Item')}}</a>
-              </div>
-              
-            </form>
+         
+            <a href="{{url('sells-summary')}}" class="btn btn-primary mb-2" style="margin-bottom: 10px">{{__('Back')}}</a>
+             <h4 style="font-weight: 700; text-align:center"> Employee's Name : {{$employee->first_name}} {{$employee->last_name}}</h4>
               {{-- <div class="col-md-4">
                 <p>
                   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -51,23 +46,8 @@
                 </div>
               </div> --}}
 
-              {{-- <div class="col-md-4">
-                <form action="{{url('get-timezone')}}" method="POST">
-                  @csrf
-                  <select name="timezone" id="filter-timezone" style="margin-top: 5px" class="form-control">
-                    @foreach ($timezone as $data)
-                      <option value="{{$data->timezone}}"> {{$data->timezone}} ({{$data->GMT}}) </option>  
-                    @endforeach
-                  </select>
-
-                  <button class="btn btn-primary" style="margin: 5px auto">Submit</button>
-                </form>
-                
-              </div> --}}
-
             </div>
           
-
 
           @if (session('message'))
           <div class="alert alert-success alert-dismissible mt-1">
@@ -82,24 +62,55 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">{{__('translate.name')}}</th>
+                <th scope="col">{{__('Item')}}</th>
                 <th scope="col">{{__('price')}}</th>
-                <th scope="col">{{__('translate.action')}}</th>
+                <th scope="col">{{__('Discount')}}</th>
+                {{-- <th scope="col">{{__('Employee')}}</th> --}}
+                <th scope="col">{{__('Created Date')}}</th>
               </tr>
             </thead>
             <tbody>
               <?php $no = 1; ?>
-              @foreach ($items as $data)    
+              @foreach ($sells as $data)    
                 <tr>
                   <th scope="row">{{$no++}}</th>
                   <td>{{$data->name}}</td>
                   <td>Rp. <?php echo number_format($data->price , 0, ',', '.') ?></td>
-                  <td>
-                    <a href="{{url('items/'.$data->id.'/edit')}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                   
-                      <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-danger{{$data->id}}"><i class="fas fa-trash"></i></button>
-                   
-                  </td>
+                  <td>{{$data->discount}}%</td>
+                  {{-- <td>{{$data->first_name}} {{$data->last_name}}</td> --}}
+                  <td>{{$data->created_date}}</td>
+                </tr>
+              @endforeach
+              
+            </tbody>
+          </table>
+          <br/>
+          {{-- Total Summaries --}}
+          <table class="table table-striped" id="table2">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{__('Date')}}</th>
+                {{-- <th scope="col">{{__('Employee')}}</th> --}}
+                <th scope="col">{{__('Created Date')}}</th>
+                <th scope="col">{{__('Last Update')}}</th>
+                <th scope="col">{{__('Total Price')}}</th>
+                <th scope="col">{{__('Total Discount')}}</th>
+                <th scope="col">{{__('Total')}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $no = 1; ?>
+              @foreach ($sells_summaries as $data)    
+                <tr>
+                  <th scope="row">{{$no++}}</th>
+                  <td>{{$data->date}}</td>
+                  {{-- <td>{{$data->first_name}} {{$data->last_name}}</td> --}}
+                  <td>{{$data->created_date}}</td>
+                  <td>{{$data->last_update}}</td>
+                  <td>Rp. <?php echo number_format($data->price_total , 0, ',', '.') ?></td>
+                  <td>Rp. <?php echo number_format($data->discount_total , 0, ',', '.') ?></td>
+                  <td>Rp. <?php echo number_format($data->total , 0, ',', '.') ?></td>
                 </tr>
               @endforeach
               
@@ -115,7 +126,7 @@
       <!-- /.box -->
         
 <!-- /.modal -->
-@foreach ($items as $data)
+{{-- @foreach ($items as $data)
     
   <div class="modal modal-danger fade" id="modal-danger{{$data->id}}">
     <div class="modal-dialog modal-sm">
@@ -131,7 +142,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{__('No')}}</button>
 
-            <form action="{{url('items/'.$data->id)}}" method="POST">
+            <form action="{{url('sells/'.$data->id)}}" method="POST">
                 @csrf
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="btn btn-outline">{{__('Yes')}}</button>
@@ -143,7 +154,7 @@
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
-@endforeach
+@endforeach --}}
 
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
