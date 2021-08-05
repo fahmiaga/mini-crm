@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Sell;
 use App\Models\SellSummary;
@@ -106,17 +107,43 @@ class SellSummaryController extends Controller
         // $test = SellSummary::distinct()->get('date');
         // $test2 = SellSummary::all();
         // dd($test);
+        $sells = SellSummary::join('employees', 'employees.id', '=', 'sell_summaries.employee')
+            ->join('companies', 'companies.id', '=', 'employees.company')
+            ->get(['sell_summaries.*', 'employees.company', 'employees.first_name', 'employees.last_name', 'companies.name']);
 
         $data = [
-            'sells' => SellSummary::distinct()->get('date')
+            'sells' => $sells,
+            'company' => Company::all()
         ];
         return view('sell.sellSummaryPerDay', $data);
     }
 
-    public function detailPerday($date)
+    public function detailPerday(Request $request)
     {
+        $from = $request->min;
+        $to = $request->max;
+        $company = $request->company;
+        $result = null;
+        if ($company === null) {
+            $result = SellSummary::join('employees', 'employees.id', '=', 'sell_summaries.employee')
+                ->join('companies', 'companies.id', '=', 'employees.company')
+                ->whereBetween('date', [$from, $to])
+                ->whereRaw("concat(employees.first_name, ' ', employees.last_name) like '%" . $request->employee . "%' ")
+                ->get(['sell_summaries.*', 'employees.company', 'employees.first_name', 'employees.last_name', 'companies.name']);
+        } else {
+            $result = SellSummary::join('employees', 'employees.id', '=', 'sell_summaries.employee')
+                ->join('companies', 'companies.id', '=', 'employees.company')
+                ->whereBetween('date', [$from, $to])
+                ->where('companies.name', $request->company)
+                ->whereRaw("concat(employees.first_name, ' ', employees.last_name) like '%" . $request->employee . "%' ")
+                ->get(['sell_summaries.*', 'employees.company', 'employees.first_name', 'employees.last_name', 'companies.name']);
+        }
+
+
         $data = [
-            'sells_summaries' => SellSummary::where('date', $date)->get()
+            'from' => $from,
+            'to' => $to,
+            'result' => $result
         ];
         return view('sell.detailSummaryPerDay', $data);
     }

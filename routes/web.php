@@ -59,7 +59,7 @@ Route::middleware('session.has.token')->group(function () {
     Route::resource('sells', SellController::class);
     Route::resource('sells-summary', SellSummaryController::class);
     Route::get('sells-summary-per-day', [SellSummaryController::class, 'summaryPerDay'])->name('sells-summary-per-day');
-    Route::get('detail-summary-per-day/{date}', [SellSummaryController::class, 'detailPerday'])->name('detail-summary-per-day');
+    Route::post('detail-summary-per-day', [SellSummaryController::class, 'detailPerday'])->name('detail-summary-per-day');
     Route::post('import_companies', [CompanyController::class, 'importCompany'])->name('import_company');
     Route::get('export_companies', [CompanyController::class, 'exportCompany'])->name('export-company');
     Route::post('import_employees', [EmployeeController::class, 'importEmployee'])->name('import-employee');

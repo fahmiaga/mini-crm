@@ -26,26 +26,7 @@
         <div class="box-body">
          
             <a href="{{url('sells-summary-per-day')}}" class="btn btn-primary mb-2" style="margin-bottom: 10px">{{__('Back')}}</a>
-             {{-- <h4 style="font-weight: 700; text-align:center"> Employee's Name : {{$employee->first_name}} {{$employee->last_name}}</h4> --}}
-              {{-- <div class="col-md-4">
-                <p>
-                  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Filter Data
-                  </a>
-                </p>
-                <div class="collapse" id="collapseExample">
-                  <div class="card card-body">
-                    <div class="form-group">
-                      <input type="text" id="filter-company" name="name" placeholder="Company Name...">
-                      <input type="text" id="filter-email" name="email" placeholder="Email...">
-                      <input type="text" id="filter-website" name="website" placeholder="Website..." style="margin-top: 5px">
-                      <input type="date" id="filter-date" name="created_at" placeholder="Created At..." style="margin-top: 5px">
-                      
-                  </div>
-                  </div>
-                </div>
-              </div> --}}
-
+             <h4 style="font-weight: 700; text-align:center"> Date From : {{$from}}, To : {{$to}}</h4>
             </div>
           
 
@@ -62,8 +43,9 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
+                <th scope="col">{{__('Employee')}}</th>
+                <th scope="col">{{__('Company')}}</th>
                 <th scope="col">{{__('Date')}}</th>
-                {{-- <th scope="col">{{__('Employee')}}</th> --}}
                 <th scope="col">{{__('Created Date')}}</th>
                 <th scope="col">{{__('Last Update')}}</th>
                 <th scope="col">{{__('Total Price')}}</th>
@@ -73,11 +55,12 @@
             </thead>
             <tbody>
               <?php $no = 1; $total_price=0; $total_discount=0; $total=0;?>
-              @foreach ($sells_summaries as $data)    
+              @foreach ($result as $data)    
                 <tr>
                   <th scope="row">{{$no++}}</th>
+                  <td>{{$data->first_name}} {{$data->last_name}}</td>
+                  <td>{{$data->name}}</td>
                   <td>{{$data->date}}</td>
-                  {{-- <td>{{$data->first_name}} {{$data->last_name}}</td> --}}
                   <td>{{$data->created_date}}</td>
                   <td>{{$data->last_update}}</td>
                   <td>Rp. <?php echo number_format($data->price_total , 0, ',', '.') ?></td>
@@ -89,10 +72,10 @@
                 </tr>
               @endforeach
               <tr>
-                <td colspan="4"> <b>Total</b></td>
-                <td>Rp. <?php echo number_format($total_price , 0, ',', '.') ?></td>
-                <td>Rp. <?php echo number_format($total_discount , 0, ',', '.') ?></td>
-                <td>Rp. <?php echo number_format($total , 0, ',', '.') ?></td>
+                <td colspan="6"> <b>Total</b></td>
+                <td> <b>Rp. <?php echo number_format($total_price , 0, ',', '.') ?></b> </td>
+                <td> <b>Rp. <?php echo number_format($total_discount , 0, ',', '.') ?></b> </td>
+                <td> <b>Rp. <?php echo number_format($total , 0, ',', '.') ?></b> </td>
               </tr>
             </tbody>
           </table>
